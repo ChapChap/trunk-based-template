@@ -6,9 +6,9 @@ on:
       - E2E Test
     types:
       - completed
-  push:
-    branches-ignore:
-      - 'main'
+  # push:
+  #   branches-ignore:
+  #     - 'main'
 
 env:
   # Some Cloud provider env vars
