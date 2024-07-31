@@ -21,7 +21,7 @@ jobs:
 
       - name: Generate the image tag with shorten SHA
         id: generate_tag
-        run: echo "image_tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: echo "image_tag=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
 
       - name: Set image ref
         id: set_image_ref
