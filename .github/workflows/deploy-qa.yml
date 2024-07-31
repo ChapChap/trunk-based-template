@@ -1,0 +1,34 @@
+name: Deploy in QA environment
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  # Some Cloud provider env vars
+  CSP_CONTAINER_REGISTRY: docker.io://achapusot
+  APP_NAME: demo-app
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GitHub Action
+        uses: actions/checkout@v4
+
+      - name: Generate the image tag with shorten SHA
+        id: generate_tag
+        run: echo "image_tag=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+      - name: Set image ref
+        id: set_image_ref
+        run: echo "image_ref=${{ env.CSP_CONTAINER_REGISTRY }}/${{ env.APP_NAME }}:${{ steps.generate_tag.outputs.image_tag }}" >> $GITHUB_OUTPUT
+
+      - name: Login to CSP
+        run: |
+          echo "Login to CSP"
+
+      - name: Deploy to QA env
+        run: |
+          echo "Deploy ${{ steps.set_image_ref.outputs.image_ref }} to QA env"
