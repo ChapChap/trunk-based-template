@@ -1,0 +1,25 @@
+name: E2E Test
+
+on:
+  push:
+    branches-ignore:
+      - 'main'
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_HOST: localhost
+      DATABASE_NAME: postgres
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      COOKIE_SECRET: my-not-so-secret-session-cookie-secret
+      SERVER_PORT: 3000
+      NODE_ENV: dev
+      APP_USE_LOCAL_STORAGE: true
+      LOCAL_AUTH: true
+
+    steps:
+      - name: Testing
+        run: |
+          echo "test OK"

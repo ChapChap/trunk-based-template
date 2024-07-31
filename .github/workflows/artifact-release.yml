@@ -1,9 +1,14 @@
 name: Build and release container image
 
 on:
-  push:
-    branches-ignore:
-      - 'main'
+  workflow_run:
+    workflows:
+      - E2E Test
+    types:
+      - completed
+  # push:
+  #   branches-ignore:
+  #     - 'main'
 
 env:
   # Some Cloud provider env vars
@@ -12,6 +17,7 @@ env:
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       image-ref: ${{ steps.set_image_ref.outputs.image_ref }}
