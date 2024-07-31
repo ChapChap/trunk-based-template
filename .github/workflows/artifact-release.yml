@@ -1,6 +1,9 @@
 name: Build and release container image
 
 on:
+  workflow_run:
+    workflows:
+      - E2E Test
   push:
     branches-ignore:
       - 'main'
