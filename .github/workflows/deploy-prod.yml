@@ -1,9 +1,9 @@
-name: Deploy in QA environment
+name: Deploy in production environment
 
 on:
   push:
-    branches:
-      - 'main'
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 env:
   # Some Cloud provider env vars
@@ -11,7 +11,7 @@ env:
   APP_NAME: demo-app
 
 jobs:
-  deploy-qa:
+  deploy-prod:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GitHub Action
@@ -29,6 +29,6 @@ jobs:
         run: |
           echo "Login to CSP"
 
-      - name: Deploy to QA env
+      - name: Deploy to production env
         run: |
-          echo "Deploy ${{ steps.set_image_ref.outputs.image_ref }} to QA env"
+          echo "Deploy ${{ steps.set_image_ref.outputs.image_ref }} to production env"
